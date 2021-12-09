@@ -1,3 +1,6 @@
+# 1. order of digits doesn't matter
+# 2. convolution of lines - wrong way
+
 file = File.open("input6.txt")
 fishes = file.readline.split(",").map(&:to_i)
 
