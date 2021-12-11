@@ -21,18 +21,8 @@ outputs = file.readlines.map(&:chomp).map{|l|
     s = s.chars.sort.join
   }
 
-  # go through outputs and check numbers 1 => len 2, 7 => len 3, 4 => len 4, 8 => len 7
-  outputs_sorted.map{|s|
-    if [2,3,4,7].include?(s.length) && signals_sorted.include?(s)
-      mapping_s[s] = len_mapping[s.length]
-      mapping_l[s.length] = s
-
-      signals_sorted.reject!{|x| x == s}
-    end
-  }
-
-  # go through signals and do the same
-  signals_sorted.map{|s|
+  # go through valeus numbers 1 => len 2, 7 => len 3, 4 => len 4, 8 => len 7
+  [signals_sorted + outputs_sorted].flatten.map{|s|
     if [2,3,4,7].include?(s.length)
       mapping_s[s] = len_mapping[s.length]
       mapping_l[s.length] = s
@@ -82,10 +72,6 @@ outputs = file.readlines.map(&:chomp).map{|l|
   mapping_s[nine] = 9
   six = six_nine.find{|s| !s.include? nine}
   mapping_s[six] = 6
-
-  # p k[1] + " : " + outputs_sorted.map{|s|
-  #   mapping_s[s]
-  # }.join
 
   outputs_sorted.map{|s|
     mapping_s[s]
