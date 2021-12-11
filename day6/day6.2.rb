@@ -1,6 +1,8 @@
 # 1. order of digits doesn't matter
 # 2. convolution of lines - wrong way
 
+# interesting function https://medium.com/@baweaver/ruby-2-7-enumerable-tally-a706a5fb11ea
+
 file = File.open("input6.txt")
 fishes = file.readline.split(",").map(&:to_i)
 
