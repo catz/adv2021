@@ -22,19 +22,19 @@ def min_adj i, j
   }.min
 end
 
-$visited = {}
+$visited_locations = {}
 def calculate_basin_size i, j, size = 1
   v = $nums[i][j]
   n = neighbors i, j
 
   while n.length > 0
     next_coord = n.shift
-    # p next_coord
-    if next_coord && !$visited[next_coord]
+
+    if next_coord && !$visited_locations[next_coord]
       v1 = $nums[next_coord[0]][next_coord[1]]
 
       if v1 > v && v1 != 9
-        $visited[next_coord] = true
+        $visited_locations[next_coord] = true
         size = calculate_basin_size next_coord[0], next_coord[1], size + 1
       end
     end
