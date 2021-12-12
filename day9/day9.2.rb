@@ -23,7 +23,7 @@ def min_adj i, j
 end
 
 $visited = {}
-def basin i, j, size = 1
+def calculate_basin_size i, j, size = 1
   v = $nums[i][j]
   n = neighbors i, j
 
@@ -35,7 +35,7 @@ def basin i, j, size = 1
 
       if v1 > v && v1 != 9
         $visited[next_coord] = true
-        size = basin next_coord[0], next_coord[1], size + 1
+        size = calculate_basin_size next_coord[0], next_coord[1], size + 1
       end
     end
   end
@@ -55,7 +55,7 @@ $nums.each_with_index{|row, i|
 
 # 2. find basins sizes
 basins = coord.map{|x,y|
-  basin x, y
+  calculate_basin_size x, y
 }
 
 b1 = basins.max
