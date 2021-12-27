@@ -4,7 +4,7 @@
 # you can't go only right & down
 # you can't take only upper-righy/down-right part from diagonal
 
-require "set"
+require "algorithms"
 
 # file = File.open("test15.txt")
 file = File.open("input15.txt")
@@ -43,7 +43,8 @@ end
 
 caves = increase_risk caves
 caves[[0,0]][:total_risk] = 0
-unvisited = [[0,0]]
+unvisited = Containers::PriorityQueue.new
+unvisited.push([0,0], 0)
 
 width = caves.keys.map{|i,j| j}.max
 height = caves.keys.map{|i,j| i}.max
@@ -51,7 +52,7 @@ height = caves.keys.map{|i,j| i}.max
 previous_caves = {}
 
 while(!unvisited.empty?)
-  x, y = unvisited.shift
+  x, y = unvisited.pop
 
   current_risk = caves[[x,y]][:total_risk]
 
@@ -59,7 +60,6 @@ while(!unvisited.empty?)
   cave2 = [x, y+1]
   cave3 = [x-1, y]
   cave4 = [x, y-1]
-
 
   [cave1, cave2, cave3, cave4].each{|coord|
     if caves[coord]
@@ -69,27 +69,22 @@ while(!unvisited.empty?)
       if new_risk < caves[coord][:total_risk]
         caves[coord][:total_risk] = new_risk
         previous_caves[coord] = [x,y]
-
-        unvisited << coord
+        unvisited.push(coord, -new_risk)
       end
-
-
     end
   }
 end
 
 p caves[[width,height]][:total_risk]
 
-# p previous_caves
-
-success_path = []
-q = [previous_caves[[width, height]]]
-while q.any?
-  x = q.shift
-  # p [x, caves[x][:risk], caves[x][:total_risk]]
-  success_path << x
-  q << previous_caves[x]
-end
+# success_path = []
+# q = [previous_caves[[width, height]]]
+# while q.any?
+#   x = q.shift
+#   # p [x, caves[x][:risk], caves[x][:total_risk]]
+#   success_path << x
+#   q << previous_caves[x]
+# end
 
 
 # puts "<table>"
